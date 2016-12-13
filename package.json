@@ -1,7 +1,7 @@
 {
-  "name": "angular-dashboard-seed",
+  "name": "openchirp_website",
   "version": "1.0.0-beta",
-  "description": "Angular Dashboard Seed",
+  "description": "OpenChirp Website",
   "authors": [],
   "engines": {
     "node": "0.10.x"
