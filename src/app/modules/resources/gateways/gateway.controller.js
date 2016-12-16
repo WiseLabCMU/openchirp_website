@@ -1,34 +1,41 @@
-angular.module('app.gateway').controller('GatewayListController', function($scope, $state, notificator,  GatewayResource) {
+(function() {
+  'use strict';
+
+  angular
+    .module('app.gateway')
+    .controller('GatewayListController', gatewayListController)
+    .controller('GatewayController', gatewayController);
+
+  gatewayListController.$inject = ['$state', 'deleteGatewayModal','GatewayResource'];
+  gatewayController.$inject = ['config','$state', '$stateParams', 'shortHistory', 'notificator', 'GatewayResource'];
+
+  function gatewayListController($state, deleteGatewayModal, GatewayResource) {
+    var vm = this;
+    vm.gateways = GatewayResource.query(); //fetch all gateways
+    vm.delete = deleteGatewayModal.getDeleteMethod(vm.gateways);
+  }
+
+ function gatewayController(config, $state, $stateParams, shortHistory, notificator, GatewayResource) {
   var vm = this;
-  $scope.gateways = GatewayResource.query(); //fetch all gateways
+  vm.title = config.appTitle;
+  vm.gateway =  $stateParams.id ? GatewayResource.get({id: $stateParams.id}) : {};
+  vm.showReturnBtn = vm.gateway.id && shortHistory.from.state.name;
 
-  vm.deleteGateway = function(gateway) { // Delete a gateway. Issues a DELETE to /api/gateways/:id
-    if (popupService.showPopup('Really delete this?')) {
-      movie.$delete(function() {
-        $window.location.href = ''; //redirect to home
+    vm.update = function() {
+      GatewayResource.update(vm.gateway, function(p) {
+        notificator.success('Gateway was successfully updated');
       });
-    }
-  };
-}).controller('MovieViewController', function($scope, $stateParams, Movie) {
-  $scope.movie = Movie.get({ id: $stateParams.id }); //Get a single movie.Issues a GET to /api/movies/:id
-}).controller('MovieCreateController', function($scope, $state, $stateParams, Movie) {
-  $scope.movie = new Movie();  //create new movie instance. Properties will be set via ng-model on UI
+    };
 
-  $scope.addMovie = function() { //create a new movie. Issues a POST to /api/movies
-    $scope.movie.$save(function() {
-      $state.go('movies'); // on success go back to home i.e. movies state.
-    });
-  };
-}).controller('MovieEditController', function($scope, $state, $stateParams, Movie) {
-  $scope.updateMovie = function() { //Update the edited movie. Issues a PUT to /api/movies/:id
-    $scope.movie.$update(function() {
-      $state.go('movies'); // on success go back to home i.e. movies state.
-    });
-  };
+    vm.return = function() {
+        $state.go(shortHistory.from.state.name, shortHistory.from.params);
+    };
 
-  $scope.loadMovie = function() { //Issues a GET request to /api/movies/:id to get a movie to update
-    $scope.movie = Movie.get({ id: $stateParams.id });
-  };
-
-  $scope.loadMovie(); // Load a movie which can be edited on UI
-});
+    vm.save = function() {
+      GatewayResource.save(vm.gateway, function(savedGateway) {
+        shortHistory.goTo('from');
+        notificator.success('Gateway was successfully saved');
+      });
+    };
+  }
+})();

@@ -18,7 +18,7 @@
         .then(null, function(err) {
           vm.responseErrorMsg = err.data.message;
         });
-    }
+    };
   }
 
   runAuth.$inject = ['$rootScope', '$state', 'authenticationService'];
