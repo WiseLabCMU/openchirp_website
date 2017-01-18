@@ -17,9 +17,7 @@
 
  function gatewayController(config, $state, $stateParams, shortHistory, notificator, GatewayResource) {
   var vm = this;
-  vm.title = config.appTitle;
-  vm.gateway =  $stateParams.id ? GatewayResource.get({id: $stateParams.id}) : {};
-  vm.showReturnBtn = vm.gateway.id && shortHistory.from.state.name;
+  vm.gateway =  $stateParams.id ? GatewayResource.get({_id: $stateParams.id}) : {};
 
     vm.update = function() {
       GatewayResource.update(vm.gateway, function(p) {

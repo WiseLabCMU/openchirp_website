@@ -7,7 +7,7 @@
         <widget>
             <header>
               <button type="button" class="btn btn-sm btn-gray mt-n-xs pull-right" ui-sref="app.editGateway({_id: null})">Create new Gateway</button>
-              <h4 class="widget-title">Posts</h4>
+              <h4 class="widget-title">Gateways</h4>
             </header>
             <table class="table table-striped">
                 <thead>
@@ -15,6 +15,8 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Location</th>
+                    <th>Pubsub Endpoint </th>
+                    <th>Enabled</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -22,8 +24,10 @@
                     <td>{{gateway.name}}</td>
                     <td>{{gateway.type}}</td>
                     <td>{{gateway.location_id}}</td>
+                    <td>{{gateway.pubsub.endpoint}}</td>
+                    <td>{{gateway.enabled}}</td>
                     <td class="text-right">
-                        <button type="button" class="btn btn-default" ui-sref="app.editGateway({_id: gateway._id})">Edit</button>
+                        <button type="button" class="btn btn-default" ui-sref="app.editGateway({id: gateway._id})">Edit</button>
                         <button type="button" class="btn btn-danger" ng-click="vm.delete(gateway)">Delete</button>
                     </td>
                 </tr>

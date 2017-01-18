@@ -3,13 +3,13 @@
   <li class="active">{{vm.gateway._id ? 'Edit gateway' : 'Create new'}}</li>
 </ol>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-5">
         <widget>
-            <h4 class="mt-0">{{vm.gateway._id ? 'Edit gateway' : 'Create new'}} gateway</h4>
+            <h4 class="mt-0">{{vm.gateway._id ? 'Edit gateway' : 'Create new gateway'}} </h4>
             <form novalidate role="form" name="postForm" class="form-horizontal mt" ng-submit="postForm.$valid && (vm.gateway._id ? vm.update() : vm.save())" >
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="title">Name</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 control-label" for="name">Name</label>
+                    <div class="col-sm-5">
                         <input type="text" id="name" name="name" class="form-control" ng-model="vm.gateway.name"
                                required ng-minlength=3 ng-maxlength=100 />
                         <div ng-show="postForm.name.$invalid && (postForm.name.$dirty || postForm.$submitted)">
@@ -26,15 +26,57 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="type">Type</label>
-                    <div class="col-sm-10">
-                        
+                    <label class="control-label col-sm-3" for="type">Type</label>
+                    <div class="col-sm-5">
+                      <input type="text" id="type" name="type" class="form-control" ng-model="vm.gateway.type" required />
+                        <div ng-show="postForm.type.$invalid && (postForm.type.$dirty || postForm.$submitted)">
+                            <small class="error" ng-show="postForm.type.$error.required">
+                                    Type is required.
+                            </small>
+                        </div>
                     </div>
                 </div>
-                <div class="text-right">
-                    <span ng-if="vm.showReturnBtn">
-                        <button type="button" class="btn" ng-click="vm.return()">Return</button>
-                    </span>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="location">Location</label>
+                    <div class="col-sm-5">
+                      <input type="text" id="location" name="location" class="form-control" ng-model="vm.gateway.location_id" required />
+                        <div ng-show="postForm.location.$invalid && (postForm.location.$dirty || postForm.$submitted)">
+                            <small class="error" ng-show="postForm.location.$error.required">
+                                    Location is required.
+                            </small>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="protocol">PubSub Protocol</label>
+                    <div class="col-sm-5">
+                      <input type="text" id="protocol" name="protocol" class="form-control" ng-model="vm.gateway.pubsub.protocol" required />
+                        <div ng-show="postForm.protocol.$invalid && (postForm.protocol.$dirty || postForm.$submitted)">
+                            <small class="error" ng-show="postForm.protocol.$error.required">
+                                    PubSub Protocol is required.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="control-label col-sm-3" for="endpoint">PubSub Endpoint</label>
+                    <div class="col-sm-5">
+                      <input type="text" id="endpoint" name="endpoint" class="form-control" ng-model="vm.gateway.pubsub.endpoint" required />
+                        <div ng-show="postForm.endpoint.$invalid && (postForm.endpoint.$dirty || postForm.$submitted)">
+                            <small class="error" ng-show="postForm.endpoint.$error.required">
+                                    PubSub endpoint is required.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="enabled">Enabled</label>
+                    <div class="col-sm-1">
+                      <input type="checkbox" id="enabled" name="enabled" class="form-control" ng-model="vm.gateway.enabled" checked="checked"/>                        
+                    </div>
+                </div>
+                <div class="text-right">                  
+                    <button type="button" class="btn" ng-click="vm.return()">Return</button>                   
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
